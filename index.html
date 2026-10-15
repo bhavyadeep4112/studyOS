@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07152e">
+
+    <title>StudyOS | CBSE Class 10 Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <span class="logo">✦</span>
+            <div>
+                <b>STUDY<span>OS</span></b>
+                <small>CBSE CLASS 10 · 2026–27</small>
+            </div>
+        </div>
+
+        <nav class="nav-menu" aria-label="Main navigation">
+            <button class="nav active" data-view="dashboard">▦ Dashboard</button>
+            <button class="nav" data-view="chapters">☷ Chapter Tracker</button>
+            <button class="nav" data-view="questions">✓ Question Banks</button>
+            <button class="nav" data-view="tests">▤ Mock Tests</button>
+            <button class="nav" data-view="timetable">▦ Weekly Timetable</button>
+            <button class="nav" data-view="daily">◷ Daily Checklist</button>
+        </nav>
+
+        <div class="side-goal">
+            <small>YOUR TARGET</small>
+            <h2>95%+</h2>
+            <div class="track">
+                <i id="sideBar"></i>
+            </div>
+            <small id="sidePercent">0% completed</small>
+        </div>
+
+        <p class="privacy">
+            🔒 Progress saved in this browser
+        </p>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+            <div>
+                <small id="today"></small>
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+
+            <div class="top-actions">
+                <span class="pill">● Target: <b>95%+</b></span>
+                <button
+                    class="menu-btn"
+                    id="menuBtn"
+                    aria-label="Toggle navigation">
+                    ☰
+                </button>
+            </div>
+        </header>
+
+        <!-- ================= DASHBOARD ================= -->
+        <section class="view active" id="dashboard">
+
+            <div class="hero">
+                <div>
+                    <small class="eyebrow">SMALL STEPS. BIG RESULTS.</small>
+
+                    <h2>
+                        Build your <span>95%+</span><br>
+                        one session at a time.
+                    </h2>
+
+                    <p>
+                        Learn it. Practise it. Review your mistakes. Repeat.
+                    </p>
+
+                    <button class="primary" data-go="daily">
+                        Start today's study →
+                    </button>
+                </div>
+
+                <div class="hero-mark">
+                    95<small>%+</small>
+                </div>
+            </div>
+
+            <!-- SUMMARY CARDS -->
+            <div class="stats">
+
+                <article class="stat">
+                    <small>Chapters completed</small>
+                    <strong id="statChapters">0 / 0</strong>
+                    <span>Across all subjects</span>
+                </article>
+
+                <article class="stat">
+                    <small>Question-bank tasks</small>
+                    <strong id="statQuestions">0%</strong>
+                    <span>Worksheets completed</span>
+                </article>
+
+                <article class="stat">
+                    <small>Mock-test average</small>
+                    <strong id="statAverage">—</strong>
+                    <span id="testCount">No tests yet</span>
+                </article>
+
+                <article class="stat">
+                    <small>Preboards in</small>
+                    <strong id="countdown">—</strong>
+                    <span>19 November 2026</span>
+                </article>
+
+            </div>
+
+            <!-- PROGRESS AND CHECKLIST -->
+            <div class="columns">
+
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <small class="eyebrow">YOUR JOURNEY</small>
+                            <h3>Overall progress</h3>
+                        </div>
+
+                        <span class="pill" id="progressLabel">
+                            Getting started
+                        </span>
+                    </div>
+
+                    <div class="big-number" id="overallPercent">0%</div>
+
+                    <div class="track">
+                        <i id="overallBar"></i>
+                    </div>
+
+                    <div id="subjectProgress" class="subject-progress"></div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <small class="eyebrow">TODAY'S FOCUS</small>
+                            <h3>Daily checklist</h3>
+                        </div>
+
+                        <button class="text-btn" data-go="daily">
+                            View all →
+                        </button>
+                    </div>
+
+                    <div id="miniTasks"></div>
+                    <p class="muted" id="miniSummary">0 tasks completed</p>
+                </article>
+
+            </div>
+
+            <!-- GRAPHS AND TODAY'S PLAN -->
+            <div class="columns">
+
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <small class="eyebrow">TEST PERFORMANCE</small>
+                            <h3>Mock-test trend</h3>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <canvas id="chart"></canvas>
+                        <p class="empty" id="chartEmpty">
+                            Add mock-test scores to see your graph.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <small class="eyebrow">YOUR WEEK</small>
+                            <h3>Study plan</h3>
+                        </div>
+
+                        <button class="text-btn" data-go="timetable">
+                            View →
+                        </button>
+                    </div>
+
+                    <div id="todayPlan"></div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ================= CHAPTER TRACKER ================= -->
+        <section class="view" id="chapters">
+
+            <div class="intro">
+                <div>
+                    <h2>Chapter Tracker</h2>
+                    <p>
+                        Track chapters as Not Started, In Progress or Completed.
+                    </p>
+                </div>
+
+                <input
+                    id="chapterSearch"
+                    type="search"
+                    placeholder="Search chapters..."
+                    aria-label="Search chapters">
+            </div>
+
+            <div id="chapterFilters" class="filters"></div>
+            <div id="chapterList" class="stack"></div>
+
+        </section>
+
+        <!-- ================= QUESTION BANKS ================= -->
+        <section class="view" id="questions">
+
+            <div class="intro">
+                <div>
+                    <h2>Question-Bank Tracker</h2>
+                    <p>
+                        Track each worksheet separately for every chapter.
+                    </p>
+                </div>
+            </div>
+
+            <div class="filters" id="questionFilters"></div>
+
+            <div class="notice">
+                <b>W1:</b> NCERT + Exemplar
+                <span>·</span>
+                <b>W2:</b> PYQs
+                <span>·</span>
+                <b>W3:</b> Competency-based
+                <span>·</span>
+                <b>W4:</b> Push Yourself
+            </div>
+
+            <div class="worksheet-times">
+                <p>W1 estimated time: <b>125 minutes</b></p>
+                <p>W2 estimated time: <b>135 minutes</b></p>
+                <p>W3 estimated time: <b>105 minutes</b></p>
+                <p>W4 estimated time: <b>50 minutes</b></p>
+            </div>
+
+            <div id="questionList" class="stack"></div>
+
+        </section>
+
+        <!-- ================= MOCK TESTS ================= -->
+        <section class="view" id="tests">
+
+            <div class="intro">
+                <div>
+                    <h2>Mock-Test Marks</h2>
+                    <p>
+                        Record scores, review mistakes and track improvement.
+                    </p>
+                </div>
+            </div>
+
+            <div class="columns tests-columns">
+
+                <!-- ADD TEST FORM -->
+                <form class="panel form" id="testForm">
+
+                    <small class="eyebrow">NEW RESULT</small>
+                    <h3>Add a mock test</h3>
+
+                    <label for="testSubject">Subject</label>
+                    <select id="testSubject">
+                        <option>Maths</option>
+                        <option>Science</option>
+                        <option>SST</option>
+                        <option>English</option>
+                        <option>Hindi</option>
+                        <option>IT</option>
+                        <option>Full syllabus</option>
+                    </select>
+
+                    <label for="testName">Test name</label>
+                    <input
+                        id="testName"
+                        type="text"
+                        required
+                        maxlength="70"
+                        placeholder="e.g. Maths Sample Paper 1">
+
+                    <div class="two">
+                        <div>
+                            <label for="testMarks">Marks obtained</label>
+                            <input
+                                id="testMarks"
+                                type="number"
+                                min="0"
+                                step="0.5"
+                                required
+                                placeholder="70">
+                        </div>
+
+                        <div>
+                            <label for="testTotal">Maximum marks</label>
+                            <input
+                                id="testTotal"
+                                type="number"
+                                min="1"
+                                step="0.5"
+                                value="80"
+                                required>
+                        </div>
+                    </div>
+
+                    <label for="testDate">Test date</label>
+                    <input id="testDate" type="date" required>
+
+                    <label for="testNotes">Mistakes / topics to revise</label>
+                    <textarea
+                        id="testNotes"
+                        rows="3"
+                        placeholder="What should you work on?"></textarea>
+
+                    <button class="primary" type="submit">
+                        Save test result +
+                    </button>
+
+                    <p id="formError" class="error"></p>
+
+                </form>
+
+                <!-- TEST HISTORY -->
+                <article class="panel">
+
+                    <div class="panel-head">
+                        <h3>Test history</h3>
+                        <span class="pill" id="historyCount">0 tests</span>
+                    </div>
+
+                    <div id="testHistory" class="stack"></div>
+
+                </article>
+
+            </div>
+
+            <!-- TEST GRAPH -->
+            <article class="panel chart-panel">
+                <h3>Score trend</h3>
+
+                <div class="chart-box large">
+                    <canvas id="chartLarge"></canvas>
+                    <p class="empty" id="chartEmptyLarge">
+                        Your graph will appear after you add tests.
+                    </p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- ================= WEEKLY TIMETABLE ================= -->
+        <section class="view" id="timetable">
+
+            <div class="intro">
+                <div>
+                    <h2>Weekly Timetable</h2>
+                    <p>
+                        A study plan designed for 3–4 hours after school.
+                    </p>
+                </div>
+
+                <button class="secondary" id="resetTimetable">
+                    Reset plan
+                </button>
+            </div>
+
+            <div class="notice">
+                <b>Priority order:</b> Maths → Science → SST.
+                English, Hindi and IT remain in the weekly rotation.
+            </div>
+
+            <div id="timetableGrid" class="timetable"></div>
+
+        </section>
+
+        <!-- ================= DAILY CHECKLIST ================= -->
+        <section class="view" id="daily">
+
+            <div class="intro">
+                <div>
+                    <h2>Daily Checklist</h2>
+                    <p>
+                        Keep track of today's study tasks and revision.
+                    </p>
+                </div>
+
+                <button class="secondary" id="clearTasks">
+                    Clear today's ticks
+                </button>
+            </div>
+
+            <div class="columns">
+
+                <article class="panel">
+
+                    <div class="panel-head">
+                        <div>
+                            <small class="eyebrow">TODAY'S ACTIONS</small>
+                            <h3 id="dailyHeading">Today's tasks</h3>
+                        </div>
+
+                        <span class="pill" id="dailyCount">0 / 0</span>
+                    </div>
+
+                    <div id="dailyTasks" class="stack"></div>
+
+                    <form id="addTaskForm" class="add-task">
+                        <input
+                            id="newTask"
+                            type="text"
+                            required
+                            maxlength="100"
+                            placeholder="Add your own task...">
+
+                        <button class="primary" type="submit">
+                            Add +
+                        </button>
+                    </form>
+
+                </article>
+
+                <article class="panel focus">
+                    <small class="eyebrow">REMEMBER</small>
+                    <h3>Study smart, not just long.</h3>
+
+                    <p>
+                        After every practice session, note your mistakes
+                        and the correct method.
+                    </p>
+
+                    <hr>
+
+                    <p>Daily study target: <b>3–4 hours</b></p>
+                    <p>Method: <b>Understand → Practise → Review</b></p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ================= FOOTER AND BACKUP ================= -->
+        <footer>
+            <span>STUDYOS · Made for your 95%+ goal</span>
+
+            <button class="text-btn" id="exportBtn">
+                Export backup ↓
+            </button>
+
+            <button class="text-btn" id="importBtn">
+                Import backup ↑
+            </button>
+
+            <input
+                type="file"
+                id="importFile"
+                accept="application/json"
+                hidden>
+        </footer>
+
+        <div class="toast" id="toast" role="status"></div>
+
+    </main>
+</div>
+</body>
+</html>
